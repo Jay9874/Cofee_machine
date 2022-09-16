@@ -45,21 +45,11 @@ resources = {
 money_bank = 0
 
 
-def update_money(purchased_item):
-    if purchased_item == "chai":
-        return 5.0
-    elif purchased_item == "latte":
-        return 7.5
-    elif purchased_item == "cappuccino":
-        return 15.0
-    else:
-        return 12.5
-
-
 def collect_money(purchased_itm):
     given_money = 0
     print(f"Cost for {purchased_itm} is ₹{MENU[purchased_itm]['cost']}")
-    print("Please enter coins..\n")
+    print("Please enter coins..")
+    print("Accepted coins of ₹5, ₹2, ₹1, ₹0.5\n")
     coin5 = int(input("How many coin of ₹5?: "))
     coin2 = int(input("How many coin of ₹2?: "))
     coin1 = int(input("How many coin  of ₹1?: "))
@@ -88,25 +78,23 @@ def update_resources(purchased_item):
 
 def cooking(purchased_itm):
     enough_resource = update_resources(purchased_itm)
-    received_money = 0
     if enough_resource:
         balance_money = collect_money(purchased_itm)
-        if balance_money > 0 and enough_resource:
+        if balance_money > 0:
             print("Please wait, Cooking...")
             time.sleep(5)
             print(f"Here is your cup of {purchased_itm} ☕️.\n")
             print(f"{purchased_itm} costs ₹{MENU[purchased_itm]['cost']}\nPlease collect Balance, ₹{balance_money}\n"
                   f"Enjoy Your {purchased_itm}:) \n")
-            received_money += MENU[purchased_itm]['cost']
-            return received_money
-        elif balance_money == 0 and enough_resource:
+            return MENU[purchased_itm]['cost']
+        elif balance_money == 0:
             print("Please wait, Cooking...")
             time.sleep(5)
             print(f"Here is your cup of {purchased_itm} ☕️. Enjoy it :) \n")
-            received_money += MENU[purchased_itm]['cost']
-            return received_money
+            return MENU[purchased_itm]['cost']
         elif balance_money < 0:
-            print(f"Sorry, given money isn't sufficient for purchasing {purchased_itm} :( , try other drinks.\n")
+            print(f"Sorry, given money isn't sufficient for purchasing {purchased_itm} :( , try other drinks.\n"
+                  f"Your money got refunded :( \n")
             return -1
     else:
         print(f"Sorry, for inconvenience, not enough resource to brew {purchased_itm} !), try other drinks.\n")
